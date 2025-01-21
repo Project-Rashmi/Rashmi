@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:rashmi/ui/screens/home_sceen.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,7 +71,13 @@ class _LoginPageState extends State<LoginPage> {
         await prefs.setString('auth_token', token);
         await prefs.setString('username', username);
 
-        // Show success dialog
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+
         showLoginResultDialog('Login successful! Welcome $username.', true);
 
         // Optionally, navigate to another screen after login
