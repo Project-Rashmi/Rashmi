@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rashmi/core/utils/flashcard_utils.dart';
+import 'package:rashmi/ui/widgets/bottom_navigation.dart';
 import 'package:rashmi/ui/widgets/drawer.dart';
 import 'package:rashmi/ui/widgets/progress_bar.dart';
 
@@ -162,6 +163,7 @@ Widget build(BuildContext context) {
         ),
       ),
     ),
+    bottomNavigationBar: const CustomBottomNavBar(),
   );
 }
 }

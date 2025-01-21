@@ -33,6 +33,12 @@ dependencies:
   flutter_svg: ^2.0.16
   http: ^1.2.2
   path_provider: ^2.0.11
+  dotted_border: ^2.1.0
+  file_picker: ^5.0.0
+  google_fonts: ^6.1.0
+  solar_icons: ^0.0.5
+  mobkit_dashed_border: ^0.0.7
+  http_parser: ^4.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -87,6 +93,8 @@ flutter:
     - assets/lets_go.svg
     - assets/login_vector.svg
     - assets/login_back_new.svg
+    - assets/navigation_home.svg
+    - assets/navigation_create.svg
     - assets/data.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
