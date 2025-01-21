@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rashmi/ui/screens/login.dart';
 import 'package:rashmi/ui/screens/register.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,13 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Rashmi',
-      debugShowCheckedModeBanner: false ,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        fontFamily: 'Nuninto'
-      ),
-      home: const RegisterPage(),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          fontFamily: 'Nuninto'),
+      home: const LoginPage(),
     );
   }
 }
