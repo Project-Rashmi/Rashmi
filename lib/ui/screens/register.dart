@@ -1,9 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; // For encoding data to JSON
 import 'package:rashmi/ui/screens/login.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _register() async {
+    final String username = _usernameController.text;
+    final String email = _emailController.text;
+    final String password = _passwordController.text;
+
+    final Map<String, dynamic> requestBody = {
+      'username': username,
+      'email': email,
+      'password': password,
+    };
+
+    final response = await http.post(
+      Uri.parse('https://needed-narwhal-charmed.ngrok-free.app/auth/register'),
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(requestBody),
+    );
+
+    if (response.statusCode % 200 < 99) {
+      final responseData = json.decode(response.body);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
+      );
+      print('Registration successful: $responseData');
+    } else {
+      final errorData = response.body;
+      print('Registration failed: $errorData');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +71,6 @@ class RegisterPage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
@@ -47,9 +92,10 @@ class RegisterPage extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 30),
-                        const TextField(
-                          decoration: InputDecoration(
-                            labelText: "nickname",
+                        TextField(
+                          controller: _usernameController,
+                          decoration: const InputDecoration(
+                            labelText: "username",
                             filled: true,
                             fillColor: Color(0xFFCAD4FF),
                             border: OutlineInputBorder(
@@ -67,9 +113,10 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const TextField(
-                          decoration: InputDecoration(
-                            labelText: "username or email",
+                        TextField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                            labelText: "email",
                             filled: true,
                             fillColor: Color(0xFFCAD4FF),
                             border: OutlineInputBorder(
@@ -87,9 +134,10 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const TextField(
+                        TextField(
+                          controller: _passwordController,
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: "password",
                             filled: true,
                             fillColor: Color(0xFFCAD4FF),
@@ -109,13 +157,11 @@ class RegisterPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         GestureDetector(
-                          onTap: () => {
-                            //aba yeta ho tero kaam dalton
-                          },
+                          onTap: _register, // Trigger the API request
                           child: SvgPicture.asset(
                             'assets/lets_go.svg',
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
