@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rashmi/ui/screens/login.dart';
-import 'package:rashmi/ui/screens/register.dart';
 
 void main() {
   runApp(const MyApp());
