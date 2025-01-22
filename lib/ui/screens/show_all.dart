@@ -156,7 +156,7 @@ class _ShowAllSState extends State<ShowAll> {
                           title: const Text(
                             'Delete Deck',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 22,
                               fontFamily: 'Nunito',
                               color: Colors.white, 
                             ),

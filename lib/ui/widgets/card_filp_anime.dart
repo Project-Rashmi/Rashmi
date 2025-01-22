@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rashmi/ui/screens/score.dart';
+import 'package:rashmi/ui/screens/score_flashcard.dart';
 
 class CardFlipAnimation extends StatefulWidget {
   final List flashcards;
