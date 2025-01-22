@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rashmi/ui/screens/card.dart';
 import 'package:rashmi/ui/screens/home_sceen.dart';
+import 'package:rashmi/ui/screens/uploadpdf.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({super.key});
@@ -19,7 +19,7 @@ class CustomBottomNavBar extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const PlayingCard()),
+              MaterialPageRoute(builder: (context) => const UploadPdf()),
             );
           },
           child: Padding(
@@ -27,7 +27,7 @@ class CustomBottomNavBar extends StatelessWidget {
             child: Container(
               height: 50,
               width: 50,
-              color: Colors.blue,
+              color: Colors.transparent,
             ),
           ),
         ),
@@ -44,7 +44,7 @@ class CustomBottomNavBarCreate extends StatelessWidget {
     return Stack(
       children: [
         SvgPicture.asset(
-          'assets/navigation_home.svg',
+          'assets/navigation_create.svg',
           fit: BoxFit.cover,
         ),
         GestureDetector(
@@ -55,7 +55,7 @@ class CustomBottomNavBarCreate extends StatelessWidget {
             );
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 165.0, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 25),
             child: Container(
               height: 50,
               width: 50,

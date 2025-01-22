@@ -39,6 +39,7 @@ dependencies:
   solar_icons: ^0.0.5
   mobkit_dashed_border: ^0.0.7
   http_parser: ^4.1.1
+  shared_preferences: ^2.3.5
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -95,6 +96,9 @@ flutter:
     - assets/login_back_new.svg
     - assets/navigation_home.svg
     - assets/navigation_create.svg
+    - assets/play_quiz.svg
+    - assets/retry.svg
+    - assets/line.svg
     - assets/data.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

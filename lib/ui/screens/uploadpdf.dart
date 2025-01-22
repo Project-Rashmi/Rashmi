@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rashmi/ui/widgets/bottom_navigation.dart';
+import 'package:rashmi/ui/widgets/drawer.dart';
 import 'package:solar_icons/solar_icons.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobkit_dashed_border/mobkit_dashed_border.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -156,18 +157,9 @@ class _UploadPdfState extends State<UploadPdf> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE1E6FC),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFE1E6FC),
-        elevation: 0.0,
-        leading: Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.all(5),
-          child: SvgPicture.asset(
-            'assets/icons/hamburger.svg',
-            colorFilter: const ColorFilter.mode(Color(0xFF0A1F3E), BlendMode.srcIn),
-          ),
-        ),
-      ),
+      
+      drawer: const DrawerWidget(),
+      
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -531,6 +523,7 @@ class _UploadPdfState extends State<UploadPdf> {
           ),
         ),
       ),
+      bottomNavigationBar: const CustomBottomNavBarCreate(),
       );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rashmi/ui/screens/home_sceen.dart';
-import 'package:rashmi/ui/screens/uploadpdf.dart';
+import 'package:rashmi/ui/screens/login.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Nuninto'
       ),
-      home: const UploadPdf(),
+      home: const LoginPage(),
     );
   }
 }
