@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rashmi/ui/screens/register.dart';
+import 'package:rashmi/ui/screens/home_sceen.dart';
+// import 'package:rashmi/ui/screens/register.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Nuninto'
       ),
-      home: const RegisterPage(),
+      home: const HomeScreen(),
     );
   }
 }

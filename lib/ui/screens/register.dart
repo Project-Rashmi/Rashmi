@@ -51,7 +51,7 @@ class RegisterPage extends StatelessWidget {
           
                             const TextField(
                               decoration: InputDecoration(
-                                labelText: "nickname",
+                                labelText: "Nickname",
                                 filled: true,  
                                 fillColor: Color(0xFFCAD4FF),  
                                 border: OutlineInputBorder(
@@ -71,7 +71,7 @@ class RegisterPage extends StatelessWidget {
           
                             const TextField(
                               decoration: InputDecoration(
-                                labelText: "username or email",
+                                labelText: "Username or E-mail",
                                 filled: true,  
                                 fillColor: Color(0xFFCAD4FF),  
                                 border: OutlineInputBorder(
@@ -92,7 +92,7 @@ class RegisterPage extends StatelessWidget {
                             const TextField(
                               obscureText: true,
                               decoration: InputDecoration(
-                                labelText: "password",
+                                labelText: "Password",
                                 filled: true,  
                                 fillColor: Color(0xFFCAD4FF),  
                                 border: OutlineInputBorder(

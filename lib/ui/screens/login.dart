@@ -50,7 +50,7 @@ class LoginPage extends StatelessWidget {
           
                             const TextField(
                               decoration: InputDecoration(
-                                labelText: "username or email",
+                                labelText: "Username or Email",
                                 filled: true,  
                                 fillColor: Color(0xFFCAD4FF),  
                                 border: OutlineInputBorder(
@@ -71,7 +71,7 @@ class LoginPage extends StatelessWidget {
                             const TextField(
                               obscureText: true,
                               decoration: InputDecoration(
-                                labelText: "password",
+                                labelText: "Password",
                                 filled: true,  
                                 fillColor: Color(0xFFCAD4FF),  
                                 border: OutlineInputBorder(
