@@ -99,6 +99,9 @@ flutter:
     - assets/play_quiz.svg
     - assets/retry.svg
     - assets/line.svg
+    - assets/line_red.svg
+    - assets/explore.svg
+    - assets/retry_red.svg
     - assets/data.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
