@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rashmi/core/utils/flashcard_utils.dart';
+import 'package:rashmi/ui/screens/card.dart';
 import 'package:rashmi/ui/screens/show_all.dart';
+import 'package:rashmi/ui/widgets/bottom_navigation.dart';
 import 'package:rashmi/ui/widgets/drawer.dart';
 import 'package:rashmi/ui/widgets/progress_bar.dart';
 import 'package:http/http.dart' as http;
@@ -73,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     'name': card['name'],
                     'flashcards': card['flashcards'],
                     'mcqs': card['mcqs'],
+                    'deckId': card['id'],
                   })
               .toList();
         });
@@ -235,25 +238,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? List.generate(
                                       4,
                                       (index) {
-                                        final cardIndex = index ~/
-                                            2; // Each card occupies two cells (MCQs + Flashcards)
+                                        final cardIndex = index ~/ 2;
                                         final card = cards[cardIndex];
-
-                                        final isMcq = index % 2 ==
-                                            0; // Odd index for Flashcards, Even index for MCQs
+                                        final isMcq = index % 2 == 0;
                                         final itemName =
                                             isMcq ? 'MCQs' : 'Flashcards';
                                         final itemCount = isMcq
                                             ? card['mcqs']
                                             : card['flashcards'];
+
                                         final imageAsset = isMcq
                                             ? 'assets/study.svg'
                                             : 'assets/study_blue.svg';
-
                                         return GestureDetector(
                                           onTap: () {
-                                            debugPrint(
-                                                '${card['name']} - $itemName clicked'); // Log the card name and item type
+                                            if (!isMcq) {
+                                              final deckId = card[
+                                                  'deckId']; 
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => PlayingCard(
+                                                      deckId:
+                                                          deckId),
+                                                ),
+                                              );
+                                            } else {
+                                              debugPrint(
+                                                  'MCQs clicked TO DO');
+                                            }
                                           },
                                           child: Stack(
                                             children: [
@@ -263,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 width: double.infinity,
                                                 height: double.infinity,
                                               ),
-                                             Positioned(
+                                              Positioned(
                                                 left:
                                                     8, // Align text to the left
                                                 bottom:
@@ -279,7 +292,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         fontSize: 20,
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        color: Colors.white,
+                                                        color: Color.fromARGB(
+                                                            255, 255, 255, 255),
                                                       ),
                                                       maxLines: 1,
                                                       overflow:
@@ -292,7 +306,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.w700,
-                                                        color: Color.fromARGB(255, 246, 243, 243),
+                                                        color: Color.fromARGB(
+                                                            255, 246, 243, 243),
                                                       ),
                                                     ),
                                                   ],
@@ -322,6 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }

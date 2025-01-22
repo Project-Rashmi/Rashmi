@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:rashmi/ui/screens/card.dart';
+
 class ShowAll extends StatefulWidget {
   const ShowAll({Key? key}) : super(key: key);
 
@@ -43,6 +45,7 @@ class _ShowAllSState extends State<ShowAll> {
               'name': card['name'],
               'mcqs': card['mcqs'],
               'flashcards': card['flashcards'],
+              'deckId': card['id'],
             };
           }).toList();
           isLoading = false;
@@ -55,6 +58,42 @@ class _ShowAllSState extends State<ShowAll> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  Future<void> deleteDeck(String deckId, BuildContext context) async {
+    const String urlBase =
+        'https://needed-narwhal-charmed.ngrok-free.app/card/deck';
+    const String token =
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbjExIiwiZXhwIjoxNzM4MTU3MzY1LCJpYXQiOjE3Mzc1NTczNjV9.IlIUaIA-Cq7sOzW7dNT6SDpoWPWeHr6YdFkc27qTlS0';
+
+    try {
+      final response = await http.delete(
+        Uri.parse('$urlBase/$deckId'),
+        headers: {
+          'accept': 'application/json',
+          'Authorization': token,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Successfully deleted
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Deck deleted successfully.'),
+          ),
+        );
+      } else {
+        // Handle error
+        throw Exception('Failed to delete the deck: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error deleting deck: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to delete deck. Please try again.'),
+        ),
+      );
     }
   }
 
@@ -94,7 +133,82 @@ class _ShowAllSState extends State<ShowAll> {
 
                 return GestureDetector(
                   onTap: () {
-                    debugPrint('${card['name']} - $itemName clicked');
+                    if (!isMcq) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlayingCard(
+                            deckId: card['deckId'],
+                          ),
+                        ),
+                      );
+                    } else {
+                      debugPrint('${card['name']} - $itemName clicked TO DO');
+                    }
+                  },
+                  onLongPress: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: const Color.fromRGBO(
+                              103, 124, 251, 1),
+                          title: const Text(
+                            'Delete Deck',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Nunito',
+                              color: Colors.white, 
+                            ),
+                          ),
+                          content: Text(
+                            'Are you sure you want to delete the deck "${card['name']}"?',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Nunito',
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Nunito', 
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              style: TextButton.styleFrom(
+                                backgroundColor: const Color.fromRGBO(
+                                    240, 112, 103, 0.8), 
+                              ),
+                              child: const Text(
+                                'Delete',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Nunito', 
+                                  color: Colors.white, 
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    if (confirm == true) {
+                      final deckId = card['deckId'].toString();
+                      await deleteDeck(deckId, context);
+                      setState(() {
+                        cards.removeWhere((c) => c['deckId'] == card['deckId']);
+                      });
+                    }
                   },
                   child: Stack(
                     children: [

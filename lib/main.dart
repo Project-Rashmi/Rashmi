@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rashmi/ui/screens/card.dart';
 import 'package:rashmi/ui/screens/home_sceen.dart';
 // import 'package:rashmi/ui/screens/register.dart';
+import 'package:rashmi/ui/screens/login.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,14 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Rashmi',
-      debugShowCheckedModeBanner: false ,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        fontFamily: 'Nuninto'
-      ),
-      home: const HomeScreen(),
-    );
+        title: 'Rashmi',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            fontFamily: 'Nuninto'),
+        home: const HomeScreen());
   }
 }

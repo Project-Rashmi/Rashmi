@@ -1,6 +1,76 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:rashmi/ui/screens/home_sceen.dart';
+import 'package:rashmi/ui/screens/uploadpdf.dart';
 
+class CustomBottomNavBar extends StatelessWidget {
+  const CustomBottomNavBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SvgPicture.asset(
+          'assets/navigation_home.svg',
+          fit: BoxFit.cover,
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const UploadPdf()),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 165.0, vertical: 20),
+            child: Container(
+              height: 50,
+              width: 50,
+              color: Colors.transparent,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CustomBottomNavBarCreate extends StatelessWidget {
+  const CustomBottomNavBarCreate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SvgPicture.asset(
+          'assets/navigation_create.svg',
+          fit: BoxFit.cover,
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 25),
+            child: Container(
+              height: 50,
+              width: 50,
+              color: Colors.transparent,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+/*
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
 
@@ -92,3 +162,4 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     );
   }
 }
+*/

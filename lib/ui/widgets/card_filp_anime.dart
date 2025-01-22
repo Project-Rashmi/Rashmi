@@ -1,174 +1,183 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rashmi/core/constants.dart';
-import 'package:rashmi/core/utils/flashcard_utils.dart';
+import 'package:rashmi/ui/screens/score.dart';
 
 class CardFlipAnimation extends StatefulWidget {
-	const CardFlipAnimation({super.key});
+  final List flashcards;
+  final int deckId;
 
-	@override
-	createState() => CardAnimationState();
+  const CardFlipAnimation({super.key, required this.deckId, required this.flashcards});
 
-  
+  @override
+  State<CardFlipAnimation> createState() => CardAnimationState();
 }
 
-class CardAnimationState extends State<CardFlipAnimation> with SingleTickerProviderStateMixin {
-      late AnimationController _controller;
-      late Animation<double> _animation;
-      late FlashcardModel flashCardModel;
-      // Flashcard? tempFlashCard;
-      late List flashcards;
-      int currentIndex = 0;
-      bool _isFront = true;
- 
-      @override
-      void initState() {
-        super.initState();
-        _controller = AnimationController(
-              vsync: this,
-              duration: const Duration(milliseconds: 500),
-        );
+class CardAnimationState extends State<CardFlipAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  int currentIndex = 0;
+  bool _isFront = true;
+  int correctAnswers = 0;
+  int wrongAnswers = 0;
 
-        _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
-          ..addListener(() {
-            setState(() {});
-          });
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
 
-        //flashCardModel = FlashcardModel();
+    _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
+  }
 
-        final parsedJson = jsonDecode(jsonString);
-        flashcards = parsedJson['flashcards'];
-      }
+  void showNextCard() {
+    if (currentIndex < widget.flashcards.length - 1) {
+      setState(() {
+        currentIndex++;
+      });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ScoreFlashcard(totalCards: currentIndex+1, correctAnswers: correctAnswers , deckId: widget.deckId),
+        ),
+      );
+    }
+  }
 
-        void showNextCard() {
-          if (mounted) {
-            setState(() {
-              currentIndex = (currentIndex + 1) % flashcards.length;
-              print("Current Index: $currentIndex");
-              print("Current Flashcard: ${flashcards[currentIndex]}");
-            });
-          }
-        }
+  void showPreviousCard() {
+    if (currentIndex > 0) {
+      setState(() {
+        currentIndex--;
+      });
+    }
+  }
 
+  void markCorrect() {
+    correctAnswers++;
+    showNextCard();
+  }
 
-      @override
-      void dispose() {
-        _controller.dispose();
-        super.dispose();
-      }
+  void markWrong() {
+    wrongAnswers++;
+    showNextCard();
+  }
 
-      // void onFrontTapped() {
-      //   tempFlashCard = flashCardModel.onFrontMCQClicked();
-      // }
- 
-      void _flipCard() {
-        if (_controller.status != AnimationStatus.forward) {
-              if (_isFront) {
-                _controller.forward();
-              } else {
-                _controller.reverse();
-              }
-              _isFront = !_isFront;
-        }
-      }
+  void _flipCard() {
+    if (_controller.status == AnimationStatus.completed) {
+      _controller.reverse();
+    } else {
+      _controller.forward();
+    }
+    _isFront = !_isFront;
+  }
 
-      
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
-       @override
-      Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
+    if (widget.flashcards.isEmpty) {
+      return const Center(
+        child: Text(
+          'No flashcards to display',
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      );
+    }
 
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-              body: GestureDetector(
-                onTap: _flipCard,
-                child: Center(
-                      child: FittedBox(
-                        child: Transform(
-                              transform: Matrix4.rotationY(_animation.value * math.pi),
-                              alignment: Alignment.center,
-                              child: _isFront ? _buildFront() : _buildBack(),
-                        ),
-                      ),
-                ),
+    final card = widget.flashcards[currentIndex];
+
+    return Column(
+      children: [
+        Expanded(
+          child: Center(
+            child: GestureDetector(
+              onTap: _flipCard,
+              child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.rotationY(_animation.value * math.pi),
+                child: _isFront ? _buildFront(card) : _buildBack(card),
               ),
-        );
-      }
-
-      Widget _buildFront() {
-
-        final card = flashcards[currentIndex];
-
-        return ClipRRect(
-          child: SizedBox(
-            width: 339,
-            height: 213,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/flip.svg',
-                  fit: BoxFit.contain,
-                ),
-            
-                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      //tempFlashCard?.front??'',
-                      card['front'],
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                        softWrap: true,
-                    ),
-                  ),
-                ),
-              ],
             ),
           ),
-        );
-      }
- 
-      Widget _buildBack() {
-
-        final card = flashcards[currentIndex];
-
-        return Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.rotationY(3.14),
-              child: Stack(
-            alignment: Alignment.center,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/flip.svg',
+              GestureDetector(
+                onTap: showPreviousCard,
+                child: SvgPicture.asset('assets/back_arrow.svg'),
               ),
-
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      //tempFlashCard?.front??'',
-                      card['back'],
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                        softWrap: true,
-                    ),
-                  ),
-                ),
+              const SizedBox(width: 20),
+              GestureDetector(
+                onTap: markWrong,
+                child: SvgPicture.asset('assets/cross.svg'),
+              ),
+              const SizedBox(width: 20),
+              GestureDetector(
+                onTap: markCorrect,
+                child: SvgPicture.asset('assets/right.svg'),
+              ),
+              const SizedBox(width: 20),
+              GestureDetector(
+                onTap: showNextCard,
+                child: SvgPicture.asset('assets/front_arrow.svg'),
+              ),
             ],
           ),
-        );
-      }
+        ),
+      ],
+    );
+  }
+
+
+
+  Widget _buildFront(Map<String, dynamic> card) {
+    return _buildCardContent(card['front']);
+  }
+
+  Widget _buildBack(Map<String, dynamic> card) {
+    return _buildCardContent(card['back']);
+  }
+
+Widget _buildCardContent(String text) {
+  return Stack(
+    alignment: Alignment.center,
+    children: [
+      SvgPicture.asset(
+        'assets/flip.svg',
+        fit: BoxFit.contain, 
+      ),
+      Positioned(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
 }
