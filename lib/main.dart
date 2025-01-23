@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rashmi/ui/screens/card.dart';
 import 'package:rashmi/ui/screens/home_sceen.dart';
-// import 'package:rashmi/ui/screens/register.dart';
-import 'package:rashmi/ui/screens/login.dart';
-
-import 'package:rashmi/ui/screens/home_sceen.dart';
 void main() {
   runApp(const MyApp());
 }

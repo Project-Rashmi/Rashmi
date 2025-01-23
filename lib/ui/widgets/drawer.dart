@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rashmi/ui/screens/profile.dart';
 import 'package:rashmi/ui/widgets/drawer_list.dart';
 
 class DrawerWidget extends StatelessWidget{
@@ -57,7 +58,12 @@ class DrawerWidget extends StatelessWidget{
                       iconColor: const Color(0xff677CFB),
                       textColour: const Color(0xff677CFB),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Profile(),
+                                ),
+                              );
                       },
                     ),
                     const SizedBox(height: 18),
@@ -67,7 +73,12 @@ class DrawerWidget extends StatelessWidget{
                       iconColor: const Color(0xff677CFB),
                       textColour: const Color(0xff677CFB),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Stats(),
+                                ),
+                              );
                       }, 
                     ),
                     const SizedBox(height: 18),
@@ -77,7 +88,12 @@ class DrawerWidget extends StatelessWidget{
                       iconColor: const Color(0xff677CFB),
                       textColour: const Color(0xff677CFB),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Settings(),
+                                ),
+                              );
                       }
                     ),
                   ],

@@ -106,7 +106,13 @@ class CardAnimationState extends State<CardFlipAnimation>
               child: Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.rotationY(_animation.value * math.pi),
-                child: _isFront ? _buildFront(card) : _buildBack(card),
+                child: _animation.value <= 0.5
+                    ? _buildFront(card)
+                    : Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.rotationY(math.pi),
+                        child: _buildBack(card),
+                      ),
               ),
             ),
           ),
@@ -153,31 +159,45 @@ class CardAnimationState extends State<CardFlipAnimation>
   }
 
 Widget _buildCardContent(String text) {
-  return Stack(
-    alignment: Alignment.center,
-    children: [
-      SvgPicture.asset(
-        'assets/flip.svg',
-        fit: BoxFit.contain, 
-      ),
-      Positioned(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              text,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      double maxSvgHeight = constraints.maxHeight * 0.9; // Use most of available height
+      double minFontSize = 18;  // Set a minimum font size for readability
+      double maxFontSize = maxSvgHeight * 0.02; // Scale font size proportionally
+      double finalFontSize = maxFontSize > minFontSize ? maxFontSize : minFontSize;
+
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/flip.svg',
+            height: maxSvgHeight,
+            fit: BoxFit.contain,
+          ),
+          Positioned(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: finalFontSize, // Adaptive font size
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 5,  // Allow up to 5 lines to balance text wrapping
+                  overflow: TextOverflow.ellipsis, // Handle overflow gracefully
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-        ),
-      ),
-    ],
+        ],
+      );
+    },
   );
 }
+
+
 
 }

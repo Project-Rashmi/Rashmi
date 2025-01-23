@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rashmi/core/utils/flashcard_utils.dart';
 import 'package:rashmi/ui/screens/card.dart';
+import 'package:rashmi/ui/screens/random_cards.dart';
+import 'package:rashmi/ui/screens/random_mcq.dart';
 import 'package:rashmi/ui/screens/show_all.dart';
 import 'package:rashmi/ui/widgets/bottom_navigation.dart';
 import 'package:rashmi/ui/widgets/drawer.dart';
@@ -98,6 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFE1E6FC),
+
       drawer: const DrawerWidget(),
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
@@ -122,9 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             onPressed: () {
                               Scaffold.of(context).openDrawer();
-                              if (kDebugMode) {
-                                print(jsonData);
-                              }
                             },
                           );
                         },
@@ -154,7 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  debugPrint('1 clicked');
+                                  Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => const RandomCard(deckId: 3),
+                                                ),
+                                              );
                                 },
                                 child: SvgPicture.asset(
                                   'assets/random_cards.svg',
@@ -162,7 +167,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  debugPrint('2 clicked');
+                                  Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => const McqQuizRandom(deckId: 3),
+                                                ),
+                                              );
                                 },
                                 child: SvgPicture.asset(
                                   'assets/warmp_up.svg',

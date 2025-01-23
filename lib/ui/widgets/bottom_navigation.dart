@@ -9,64 +9,91 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SvgPicture.asset(
-          'assets/navigation_home.svg',
-          fit: BoxFit.cover,
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const UploadPdf()),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 165.0, vertical: 20),
-            child: Container(
-              height: 50,
-              width: 50,
-              color: Colors.transparent,
+    return SizedBox(
+      height: 100,  
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          Positioned(
+            bottom: 10, 
+            child: SvgPicture.asset(
+              'assets/navigation_home.svg',
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width * 0.9, 
             ),
           ),
-        ),
-      ],
+          Positioned(
+            bottom: 25,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const UploadPdf()),
+                );
+              },
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
 
 class CustomBottomNavBarCreate extends StatelessWidget {
   const CustomBottomNavBarCreate({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SvgPicture.asset(
-          'assets/navigation_create.svg',
-          fit: BoxFit.cover,
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 25),
-            child: Container(
-              height: 50,
-              width: 50,
-              color: Colors.transparent,
+    return SizedBox(
+      height: 100,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          Positioned(
+            bottom: 20,
+            child: SvgPicture.asset(
+              'assets/navigation_create.svg',
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width * 0.9,
             ),
           ),
-        ),
-      ],
+          Positioned(
+            bottom: 30,
+            left: 70,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
+              },
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
 
 
 

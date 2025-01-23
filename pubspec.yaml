@@ -102,6 +102,9 @@ flutter:
     - assets/line_red.svg
     - assets/explore.svg
     - assets/retry_red.svg
+    - assets/profile.svg
+    - assets/stats.svg
+    - assets/settings.svg
     - assets/data.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -10,19 +10,16 @@ class CustomProgressBar extends StatelessWidget {
     return Stack(
       alignment: Alignment.centerLeft,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-          child: Container(
-          height: 30,
-          decoration: BoxDecoration(
-            color: const Color(0xffD0D8F8), 
-            borderRadius: BorderRadius.circular(20), 
-          ),
+        Container(
+        height: 30,
+        decoration: BoxDecoration(
+          color: const Color(0xffD0D8F8), 
+          borderRadius: BorderRadius.circular(20), 
         ),
-          ),
+                ),
 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22.0), 
+          padding: const EdgeInsets.symmetric(horizontal: 4.0), 
           child: LayoutBuilder(
             builder: (context, constraints) {
               final double maxWidth = constraints.maxWidth - 16; 
@@ -44,16 +41,13 @@ class CustomProgressBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(width: 8),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(
-                 'Goals', 
-                  style: TextStyle(
-                  color:  Color(0xffD0D8F8), 
-                  fontWeight: FontWeight.bold,
-                ),
+              Text(
+               'Goals', 
+                style: TextStyle(
+                color:  Color(0xffD0D8F8), 
+                fontWeight: FontWeight.bold,
               ),
-              ),
+                            ),
             ],
           ),
         ),

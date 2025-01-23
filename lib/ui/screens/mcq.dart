@@ -96,7 +96,7 @@ Widget build(BuildContext context) {
             fit: BoxFit.cover,
           ),
           Padding(
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.all(35),
             child: mcqs.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : Column(
@@ -143,7 +143,7 @@ Widget build(BuildContext context) {
                                         ? Icons.check_box
                                         : Icons.check_box_outline_blank,
                                     color: selectedOption == index
-                                        ? Colors.green
+                                        ? Colors.white
                                         : Colors.white,
                                   ),
                                   const SizedBox(width: 10),
@@ -171,7 +171,27 @@ Widget build(BuildContext context) {
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
               child: ElevatedButton(
                 onPressed: selectedOption == -1 ? null : nextQuestion,
-                child: const Text('Next'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: selectedOption == -1 ? Colors.grey : const Color(0xFFF6F6F6), // Change color based on state
+                  foregroundColor: const Color(0xFF677CFB), // Text color
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Padding for better touch area
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // Rounded corners
+                  ),
+                  elevation: 5, // Shadow effect
+                  textStyle: const TextStyle(
+                    fontSize: 18, 
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min, // Wrap content
+                  children: [
+                    const Text('Next'),
+                    const SizedBox(width: 10), // Space between text and icon
+                    Icon(Icons.arrow_forward, color: selectedOption == -1 ? Colors.grey[400] : const Color(0xFF677CFB)),
+                  ],
+                ),
               ),
             ),
           ),
